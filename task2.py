@@ -104,3 +104,95 @@ print(cell2.make_order(10))
 \n \n *\n *\n *\n *\n
 *\n **\n **
 """
+from math import ceil
+
+class Cell:
+    """Класс органической клетки"""
+    def __init__(self, quantity):
+        if quantity < 0:
+            quantity = abs(quantity)
+            print('Количество ячеек не может быть отрицательным!'
+                  f'Установлено значение числа ячеек по модулю: {quantity}')
+        if quantity == 0:
+            quantity = 1
+            print('Количество ячеек не может быть равно нулю!'
+                  'Установлено значение числа ячеек, равное 1')
+        if quantity % 1 != 0:
+            quantity = round(quantity)
+            print('Количество ячеек олжно быть целым числом!'
+                  'Установлено значение округленное до ближайшего целого'
+                  f' значение числа ячеек: {quantity}')
+        self.quantity = quantity
+
+    def __add__(self, other):
+        summary = self.quantity + other.quantity
+        return summary
+
+    def __sub__(self, other):
+        subtract = self.quantity - other.quantity
+        if subtract <= 0:
+            return 'Результат вычитания отрицательный,\nданную операцию ' \
+                   'невозможно осуществить!\nПопробуйте поменять местами ' \
+                   'клетки'
+        return subtract
+
+    def __mul__(self, other):
+        multiplex = self.quantity *other.quantity
+        return multiplex
+
+    def __truediv__(self, other):
+        division = self.quantity // other.quantity
+        return division
+
+    def make_order(self, row_count):
+        """Отображение числа ячеек по рядам"""
+        temp = ceil(self.quantity / row_count)
+        result_string = ''
+        while temp:
+            if temp == 1:
+                count = self.quantity % row_count
+            else:
+                count = row_count
+            while count:
+                result_string += '* '
+                count -= 1
+            result_string += '\n'
+            temp -= 1
+        return result_string
+
+
+print("Создаем объекты клеток")
+cell1 = Cell(30)
+cell2 = Cell(25)
+
+cell3 = Cell(10)
+cell4 = Cell(15)
+
+print()
+
+print("Складываем")
+print(cell1 + cell2)
+
+print()
+
+print("Вычитаем")
+print(cell2 - cell1)
+print(cell4 - cell3)
+
+print()
+
+print("Умножаем")
+print(cell2 * cell1)
+
+print()
+
+print("Делим")
+print(cell1 / cell2)
+
+print()
+
+print("Организация ячеек по рядам")
+print(cell1.make_order(5))
+print(cell2.make_order(10))
+print(cell3.make_order(3))
+print(cell4.make_order(4))
